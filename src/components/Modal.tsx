@@ -1,17 +1,23 @@
+import { useNavigate } from 'react-router-dom'
 import s from './Modal.module.css'
 import type { ReactNode } from 'react'
 
 interface ModalProps {
-	onBackdropClick: () => void
 	children: ReactNode
 }
 
-export default function Modal({ onBackdropClick, children }: ModalProps) {
+export default function Modal({ children }: ModalProps) {
+	const navigate = useNavigate()
+
+	function handleClose() {
+		navigate('..')
+	}
+
 	return (
 		<>
 			<div
 				className={s.backdrop}
-				onClick={onBackdropClick}
+				onClick={handleClose}
 			/>
 			<dialog
 				open

@@ -1,8 +1,9 @@
 import { MdPostAdd, MdMessage } from 'react-icons/md'
+import { Link } from 'react-router-dom'
 
 import classes from './MainHeader.module.css'
 
-function MainHeader({ onCreatePost }: any) {
+function MainHeader({}: any) {
 	return (
 		<header className={classes.header}>
 			<h1 className={classes.logo}>
@@ -10,13 +11,13 @@ function MainHeader({ onCreatePost }: any) {
 				React Poster
 			</h1>
 			<p>
-				<button
+				<Link
 					className={classes.button}
-					onClick={onCreatePost}
+					to='/create-post'
 				>
 					<MdPostAdd size={18} />
 					New Post
-				</button>
+				</Link>
 			</p>
 		</header>
 	)
