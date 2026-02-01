@@ -1,6 +1,12 @@
 import s from './Modal.module.css'
+import type { ReactNode } from 'react'
 
-export default function Modal({ onBackdropClick, children }: any) {
+interface ModalProps {
+	onBackdropClick: () => void
+	children: ReactNode
+}
+
+export default function Modal({ onBackdropClick, children }: ModalProps) {
 	return (
 		<>
 			<div

@@ -1,42 +1,51 @@
 import Post from './Post'
 import NewPost from './NewPost'
 import s from './PostsList.module.css'
-import { useState } from 'react'
 import Modal from './Modal'
+import { useState } from 'react'
 
-export default function PostsList({ hideBackdrop, isModalVisible, posts }: any) {
-	const [bodyText, setBodyText] = useState('')
-	const [authorText, setAuthorText] = useState('')
+export interface PostData {
+	author: string
+	body: string
+}
 
-	const bodyChangeHandler = (event: any) => setBodyText(event.target.value)
-	const authorChangeHandler = (event: any) => setAuthorText(event.target.value)
+interface PostsListProps {
+	onStopPosting: () => void
+	isPosting: boolean
+}
+
+export default function PostsList({ onStopPosting, isPosting }: PostsListProps) {
+	const [posts, setPosts] = useState<PostData[]>([])
+
+	const handleAddPost = (post: PostData) => setPosts(existingPosts => [post, ...existingPosts])
 
 	return (
 		<>
-			{isModalVisible ? (
-				<Modal onBackdropClick={hideBackdrop}>
+			{isPosting ? (
+				<Modal onBackdropClick={onStopPosting}>
 					<NewPost
-						onBodyChange={bodyChangeHandler}
-						onAuthorChange={authorChangeHandler}
+						onCancel={onStopPosting}
+						onAddPost={handleAddPost}
 					/>
 				</Modal>
 			) : null}
-
-			<ul className={s.posts}>
-				<Post
-					author={authorText}
-					body={bodyText}
-				/>
-
-				{posts.map(({ author, body }: any) => (
-					<li key={body}>
-						<Post
-							author={author}
-							body={body}
-						/>
-					</li>
-				))}
-			</ul>
+			{!posts.length ? (
+				<div style={{ textAlign: 'center', color: 'white' }}>
+					<h2>No posts yet</h2>
+					<p>Start adding some!</p>
+				</div>
+			) : (
+				<ul className={s.posts}>
+					{posts.map(({ author, body }: PostData) => (
+						<li key={author + body}>
+							<Post
+								author={author}
+								body={body}
+							/>
+						</li>
+					))}
+				</ul>
+			)}
 		</>
 	)
 }

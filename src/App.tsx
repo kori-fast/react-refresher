@@ -13,12 +13,8 @@ function App() {
 			<MainHeader onCreatePost={showBackdrop} />
 			<main>
 				<PostsList
-					isModalVisible={isModalVisible}
-					hideBackdrop={hideBackdrop}
-					posts={[
-						{ author: 'Max', body: 'This is the first post' },
-						{ author: 'Kori', body: 'Second awesome post!' },
-					]}
+					isPosting={isModalVisible}
+					onStopPosting={hideBackdrop}
 				/>
 			</main>
 		</>
