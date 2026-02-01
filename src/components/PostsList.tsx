@@ -3,6 +3,7 @@ import Post from './Post'
 import s from './PostsList.module.css'
 
 export interface PostData {
+	id: string
 	author: string
 	body: string
 }
@@ -22,9 +23,10 @@ export default function PostsList({}: PostsListProps) {
 			)}
 			{posts.length > 0 && (
 				<ul className={s.posts}>
-					{posts.map(({ author, body }: PostData) => (
-						<li key={author + body}>
+					{posts.map(({ id, author, body }: PostData) => (
+						<li key={id}>
 							<Post
+								id={id}
 								author={author}
 								body={body}
 							/>
